@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Comment vivait-on?</title>
+
+
+  <script src="http://d3js.org/d3.v3.min.js"></script></script>
+
+  <!-- Functionnal javascript -->
+  <script src="js/updateCountry.js"></script>
+  <script src="js/update.js"></script>
+  <script src="js/play.js"></script>
+  <script src="js/table.js"></script>
+  <script src="js/closePopUp.js"></script>
+  <script src="js/openPopUp.js"></script>
+
+  <!-- Update all data -->
+  <script src="js/GDPPerCapita.js"></script>
+  <script src="js/realWages.js"></script>
+  <script src="js/Education.js"></script>
+  <script src="js/lifeExpectancy.js"></script>
+  <script src="js/height.js"></script>
+  <script src="js/homicide.js"></script>
+  <script src="js/polity.js"></script>
+  <script src="js/co2.js"></script>
+  <script src="js/so2.js"></script>
+  <script src="js/cropland.js"></script>
+  <script src="js/incomeIneq.js"></script>
+
+  <!-- Update all data -->
+  <script src="js/DQ_GDP.js"></script>
+  <script src="js/DQ_WAGE.js"></script>
+  <script src="js/DQ_EDU.js"></script>
+  <script src="js/DQ_LIFEEXP.js"></script>
+  <script src="js/DQ_HEIGHT.js"></script>
+  <script src="js/DQ_HOMICIDE.js"></script>
+  <script src="js/DQ_POLITY.js"></script>
+  <script src="js/DQ_CO2.js"></script>
+  <script src="js/DQ_SO2.js"></script>
+  <script src="js/DQ_CROPLAND.js"></script>
+  <script src="js/DQ_INCOMEINEQ.js"></script>
+
+  <!-- display line chart indicator X country -->
+  <script src="js/line_GDP.js"></script>
+  <script src="js/line_Wage.js"></script>
+  <script src="js/line_EDU.js"></script>
+  <script src="js/line_LIFEEXP.js"></script>
+  <script src="js/line_HEIGHT.js"></script>
+  <script src="js/line_HOMICIDE.js"></script>
+  <script src="js/line_POLITY.js"></script>
+  <script src="js/line_CO2.js"></script>
+  <script src="js/line_SO2.js"></script>
+  <script src="js/line_CROPLAND.js"></script>
+  <script src="js/line_INCOMEINEQ.js"></script>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+    /** http://eyeseast.github.io/visible-data/2013/08/28/responsive-charts-with-d3/  **/
+    /** http://learn.shayhowe.com/advanced-html-css/responsive-web-design/   **/
+
+@font-face {
+      font-family: 'TheSerif';
+      src: url('Fonts/TheSerif_D4_5_.woff');
+      font-weight: normal;
+      font-style: normal;
+    } 
+    
+    header { margin: 0 0 20px 20px; border-bottom: 1px solid #6c6c6c; width: 45%; position: relative; }
+    
+
+    body { 
+        background: rgba(225,219,193,.1); 
+        background-image:linear-gradient(rgba(225,219,193,.1), rgba(225,219,193,.1));
+        width: 100%; 
+        font: normal 14px "TheSerif", sans-serif; 
+        margin-left: auto; margin-right: auto; 
+        color: #464646;
+      }
+    
+    h1 { 
+      font-family: "TheSerif","TheSerif",sans-serif;
+      font-size: 3.5em; 
+      font-weight: bold;
+      text-shadow: #fff 0px 0px 0; margin: 0 0 0 0; padding: 0; 
+      float:left;}
+    h2 { 
+      font: bold 1.5em "TheSerif", sans-serif; font-weight: normal; 
+      text-shadow: #fff 0 1px 0; margin: 0 0 0 0; padding: 0; }
+    small { margin: 0 0 10px 130px; color: #555; font-size: 13px; font-style: italic; top: 0.6em; position: top;}
+
+    a{
+      color:#78869f;
+    }
+
+    #fixed{
+      position: fixed;
+      top:10px;
+      background-color: rgb(249,247,242);
+      width: 100%;
+      margin-top: -10px;
+      /** *zoom: 1;**/
+    }
+     /**@media only screen and  (max-device-width: 480px){**/
+       #moved{
+        margin-top: 375px;
+        width: 100%;
+        }
+
+      a.image {
+        margin-top: 10px;
+        float:right;
+        width:10%;
+        content:url("data/How-was-life.png");
+      }​
+      /**}**/
+
+
+
+
+
+     @media (max-width: 1360px){
+       #moved{
+        margin-top: 350px;
+        width: 100%;
+        }
+        a.image {
+          margin-top: 15px;
+          float:right;
+          width:15%;
+          content:url("data/How-was-life.png");
+        }​
+            header { margin: 0 0 20px 20px; border-bottom: 1px solid #6c6c6c; width: 45%; position: relative; }
+    
+
+    body { 
+        background: rgba(225,219,193,.1); 
+        background-image:linear-gradient(rgba(225,219,193,.1), rgba(225,219,193,.1));
+        width: 100%; 
+        font: normal 14px "TheSerif", sans-serif; 
+        margin-left: auto; margin-right: auto; 
+        color: #464646;
+      }
+    
+    h1 { 
+      font-family: "TheSerif","TheSerif",sans-serif;
+      font-size: 3.5em; 
+      font-weight: bold;
+      text-shadow: #fff 0px 0px 0; margin: 0 0 0 0; padding: 0; 
+      float:left;}
+    h2 { 
+      font: bold 1.5em "TheSerif", sans-serif; font-weight: normal; 
+      text-shadow: #fff 0 1px 0; margin: 0 0 0 0; padding: 0; }
+    small { margin: 0 0 10px 130px; color: #555; font-size: 13px; font-style: italic; top: 0.6em; position: top;}
+
+    a{
+      color:#78869f;
+    }
+
+    #fixed{
+      position: fixed;
+      top:10px;
+      background-color: rgb(249,247,242);
+      width: 100%;
+      margin-top: -10px;
+      /** *zoom: 1;**/
+    }
+   .subtitle{
+      float:left;
+      width:75%;
+    }
+
+    .row {
+      width: 100%;
+      /**margin-left: -20px;**/
+      *zoom: 1;
+    }
+    .row:before, .row:after {
+      display: table;
+      content: "";
+    }
+    .row:after {
+      clear: both;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .lineaxis path,
+    .lineaxis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+    .lineaxis text {
+      font-family: sans-serif;
+      font-size: 8px;
+      color: rgba(48,49,43,.9);
+    }
+    .gradient{
+        background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+        padding: .0em 0.0em 1.2em 0.0em;
+    }
+
+    #yearWellBeing {
+
+      font-family: "TheSerif","TheSerif",sans-serif;
+      float:left;
+      font-weight: normal;
+      font-size: 7em;
+      color:#78869f;
+      margin: 17px 0px 0 30px;
+    }
+
+    .unit {
+      font-family: sans-serif;
+      font-size: 10px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .indicator{
+      
+      font: bold 18px "TheSerif","TheSerif",sans-serif;
+      margin: 0 0 8px 0;
+    }
+
+    .definition{
+      font: italic 13px "TheSerif", sans-serif;
+      color:#555;
+      margin: 0 0 6px 0;
+      }
+
+    .dataQuality{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 10px 0px 5px 0;
+      }
+    .dataQualityFile{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0px 0px 5px 0;
+      }
+    .source{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0 0 6px 0;
+      }
+
+    #tooltipGDP, #tooltipWage, #tooltipEducation, #tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq  {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      opacity: 1.00;
+      filter:alpha(opacity=100);
+      -moz-opacity:1.00;
+    }
+
+
+    #tooltipGDP.hidden, #tooltipWage.hidden, #tooltipEducation.hidden, #tooltipLifeExp.hidden, #tooltipHeight.hidden, #tooltipHomicide.hidden, #tooltipPolity.hidden, #tooltipCO2.hidden, #tooltipSO2.hidden, #tooltipCropland.hidden, #tooltipIncomeIneq.hidden {
+      display: none;
+    }
+
+    #tooltipGDP,#tooltipWage,#tooltipEducation,#tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq p {
+      margin: 0;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 13px;
+    }
+
+
+
+
+    .button {
+      /*float:right;*/
+      width: 55px;
+      height: 25px;
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      font: 13px "TheSerif", sans-serif;
+      padding: .3em 1em .8em 1.2em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: 1em; 
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .button:hover{
+      text-decoration: none;
+    }
+    .button:active {
+      position: relative;
+      top: 1px;
+    }
+    .grey {
+      color: #fff;
+      border: solid 1px #afafaf;
+      background: #6e6e6e;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(58,68,86)), to(rgb(58,68,86)));
+      background: -moz-linear-gradient(top,  rgb(58,68,86),  rgb(58,68,86));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(58,68,86)', endColorstr='rgb(58,68,86)');
+    }
+    .grey:hover {
+
+      color: #fff;
+      background: #616161;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(65,78,98)), to(rgb(65,78,98)));
+      background: -moz-linear-gradient(top,  rgb(65,78,98),  rgb(65,78,98));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(65,78,98)', endColorstr='rgb(65,78,98)');
+    }
+    .grey:active {
+      color: #fff;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(43,49,61)), to(rgb(43,49,61)));
+      background: -moz-linear-gradient(top,  rgb(43,49,61),  rgb(43,49,61));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(43,49,61)', endColorstr='rgb(43,49,61)');
+    }
+
+    #tooltipAvailableCountry {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 10px;
+      border : 1px outset rgb(225,225,225);
+      /**background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);**/
+      background-color:rgb(250,250,250);
+      /-webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      /**pointer-events: none;**/
+        opacity: 1.00;
+        filter:alpha(opacity=100);
+        -moz-opacity:1.00;
+    }
+
+    #tooltipAvailableCountry.hidden {
+      display: none;
+    }
+    td, th {
+    padding: 5px 20px;
+    font: normal 12px "TheSerif", sans-serif;
+    color: #464646;
+    }    
+}
+
+
+
+
+     @media (max-width: 910px){
+       #moved{
+        margin-top: 420px;
+        width: 100%;
+        }
+        a.image {
+          margin-top: 15px;
+          float:right;
+          width:15%;
+          content:url("data/How-was-life.png");
+        }​
+    header { margin: 0 0 20px 20px; border-bottom: 1px solid #6c6c6c; width: 45%; position: relative; }
+    
+
+    body { 
+        background: rgba(225,219,193,.1); 
+        background-image:linear-gradient(rgba(225,219,193,.1), rgba(225,219,193,.1));
+        width: 100%; 
+        font: normal 14px "TheSerif", sans-serif; 
+        margin-left: auto; margin-right: auto; 
+        color: #464646;
+      }
+    
+    h1 { 
+      font-family: "TheSerif","TheSerif",sans-serif;
+      font-size: 3.5em; 
+      font-weight: bold;
+      text-shadow: #fff 0px 0px 0; margin: 0 0 0 0; padding: 0; 
+      float:left;}
+    h2 { 
+      font: bold 1.5em "TheSerif", sans-serif; font-weight: normal; 
+      text-shadow: #fff 0 1px 0; margin: 0 0 0 0; padding: 0; }
+    small { margin: 0 0 10px 130px; color: #555; font-size: 13px; font-style: italic; top: 0.6em; position: top;}
+
+    a{
+      color:#78869f;
+    }
+
+    #fixed{
+      position: fixed;
+      top:10px;
+      background-color: rgb(249,247,242);
+      width: 100%;
+      margin-top: -10px;
+      /** *zoom: 1;**/
+    }
+   .subtitle{
+      float:left;
+      width:75%;
+    }
+
+    .row {
+      width: 100%;
+      /**margin-left: -20px;**/
+      *zoom: 1;
+    }
+    .row:before, .row:after {
+      display: table;
+      content: "";
+    }
+    .row:after {
+      clear: both;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .lineaxis path,
+    .lineaxis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+    .lineaxis text {
+      font-family: sans-serif;
+      font-size: 8px;
+      color: rgba(48,49,43,.9);
+    }
+    .gradient{
+        background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+        padding: .0em 0.0em 1.2em 0.0em;
+    }
+
+    #yearWellBeing {
+
+      font-family: "TheSerif","TheSerif",sans-serif;
+      float:left;
+      font-weight: normal;
+      font-size: 7em;
+      color:#78869f;
+      margin: 17px 0px 0 30px;
+    }
+
+    .unit {
+      font-family: sans-serif;
+      font-size: 10px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .indicator{
+      
+      font: bold 18px "TheSerif","TheSerif",sans-serif;
+      margin: 0 0 8px 0;
+    }
+
+    .definition{
+      font: italic 13px "TheSerif", sans-serif;
+      color:#555;
+      margin: 0 0 6px 0;
+      }
+
+    .dataQuality{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 10px 0px 5px 0;
+      }
+    .dataQualityFile{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0px 0px 5px 0;
+      }
+    .source{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0 0 6px 0;
+      }
+
+    #tooltipGDP, #tooltipWage, #tooltipEducation, #tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq  {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      opacity: 1.00;
+      filter:alpha(opacity=100);
+      -moz-opacity:1.00;
+    }
+
+
+    #tooltipGDP.hidden, #tooltipWage.hidden, #tooltipEducation.hidden, #tooltipLifeExp.hidden, #tooltipHeight.hidden, #tooltipHomicide.hidden, #tooltipPolity.hidden, #tooltipCO2.hidden, #tooltipSO2.hidden, #tooltipCropland.hidden, #tooltipIncomeIneq.hidden {
+      display: none;
+    }
+
+    #tooltipGDP,#tooltipWage,#tooltipEducation,#tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq p {
+      margin: 0;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 13px;
+    }
+
+
+
+
+    .button {
+      /*float:right;*/
+      width: 55px;
+      height: 25px;
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      font: 13px "TheSerif", sans-serif;
+      padding: .3em 1em .8em 1.2em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: 1em; 
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .button:hover{
+      text-decoration: none;
+    }
+    .button:active {
+      position: relative;
+      top: 1px;
+    }
+    .grey {
+      color: #fff;
+      border: solid 1px #afafaf;
+      background: #6e6e6e;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(58,68,86)), to(rgb(58,68,86)));
+      background: -moz-linear-gradient(top,  rgb(58,68,86),  rgb(58,68,86));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(58,68,86)', endColorstr='rgb(58,68,86)');
+    }
+    .grey:hover {
+
+      color: #fff;
+      background: #616161;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(65,78,98)), to(rgb(65,78,98)));
+      background: -moz-linear-gradient(top,  rgb(65,78,98),  rgb(65,78,98));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(65,78,98)', endColorstr='rgb(65,78,98)');
+    }
+    .grey:active {
+      color: #fff;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(43,49,61)), to(rgb(43,49,61)));
+      background: -moz-linear-gradient(top,  rgb(43,49,61),  rgb(43,49,61));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(43,49,61)', endColorstr='rgb(43,49,61)');
+    }
+
+    #tooltipAvailableCountry {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 10px;
+      border : 1px outset rgb(225,225,225);
+      /**background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);**/
+      background-color:rgb(250,250,250);
+      /-webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      /**pointer-events: none;**/
+        opacity: 1.00;
+        filter:alpha(opacity=100);
+        -moz-opacity:1.00;
+    }
+
+    #tooltipAvailableCountry.hidden {
+      display: none;
+    }
+    td, th {
+    padding: 5px 20px;
+    font: normal 12px "TheSerif", sans-serif;
+    color: #464646;
+    }
+      }
+
+
+
+
+
+     @media (max-width: 805px){
+       #moved{
+        margin-top: 490px;
+        width: 100%;
+        }
+        a.image {
+          margin-top: 10px;
+          float:right;
+          width:15%;
+          content:url("data/How-was-life.png");
+        }​
+    header { margin: 0 0 20px 20px; border-bottom: 1px solid #6c6c6c; width: 45%; position: relative; }
+    
+
+    body { 
+        background: rgba(225,219,193,.1); 
+        background-image:linear-gradient(rgba(225,219,193,.1), rgba(225,219,193,.1));
+        width: 100%; 
+        font: normal 14px "TheSerif", sans-serif; 
+        margin-left: auto; margin-right: auto; 
+        color: #464646;
+      }
+    
+    h1 { 
+      font-family: "TheSerif","TheSerif",sans-serif;
+      font-size: 3.5em; 
+      font-weight: bold;
+      text-shadow: #fff 0px 0px 0; margin: 0 0 0 0; padding: 0; 
+      float:left;}
+    h2 { 
+      font: bold 1.5em "TheSerif", sans-serif; font-weight: normal; 
+      text-shadow: #fff 0 1px 0; margin: 0 0 0 0; padding: 0; }
+    small { margin: 0 0 10px 130px; color: #555; font-size: 13px; font-style: italic; top: 0.6em; position: top;}
+
+    a{
+      color:#78869f;
+    }
+
+    #fixed{
+      position: fixed;
+      top:10px;
+      background-color: rgb(249,247,242);
+      width: 100%;
+      margin-top: -10px;
+      /** *zoom: 1;**/
+    }
+   .subtitle{
+      float:left;
+      width:75%;
+    }
+
+    .row {
+      width: 100%;
+      /**margin-left: -20px;**/
+      *zoom: 1;
+    }
+    .row:before, .row:after {
+      display: table;
+      content: "";
+    }
+    .row:after {
+      clear: both;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .lineaxis path,
+    .lineaxis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+    .lineaxis text {
+      font-family: sans-serif;
+      font-size: 8px;
+      color: rgba(48,49,43,.9);
+    }
+    .gradient{
+        background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+        padding: .0em 0.0em 1.2em 0.0em;
+    }
+
+    #yearWellBeing {
+
+      font-family: "TheSerif","TheSerif",sans-serif;
+      float:left;
+      font-weight: normal;
+      font-size: 7em;
+      color:#78869f;
+      margin: 17px 0px 0 30px;
+    }
+
+    .unit {
+      font-family: sans-serif;
+      font-size: 10px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .indicator{
+      
+      font: bold 18px "TheSerif","TheSerif",sans-serif;
+      margin: 0 0 8px 0;
+    }
+
+    .definition{
+      font: italic 13px "TheSerif", sans-serif;
+      color:#555;
+      margin: 0 0 6px 0;
+      }
+
+    .dataQuality{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 10px 0px 5px 0;
+      }
+    .dataQualityFile{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0px 0px 5px 0;
+      }
+    .source{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0 0 6px 0;
+      }
+
+    #tooltipGDP, #tooltipWage, #tooltipEducation, #tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq  {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      opacity: 1.00;
+      filter:alpha(opacity=100);
+      -moz-opacity:1.00;
+    }
+
+
+    #tooltipGDP.hidden, #tooltipWage.hidden, #tooltipEducation.hidden, #tooltipLifeExp.hidden, #tooltipHeight.hidden, #tooltipHomicide.hidden, #tooltipPolity.hidden, #tooltipCO2.hidden, #tooltipSO2.hidden, #tooltipCropland.hidden, #tooltipIncomeIneq.hidden {
+      display: none;
+    }
+
+    #tooltipGDP,#tooltipWage,#tooltipEducation,#tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq p {
+      margin: 0;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 13px;
+    }
+
+
+
+
+    .button {
+      /*float:right;*/
+      width: 55px;
+      height: 25px;
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      font: 13px "TheSerif", sans-serif;
+      padding: .3em 1em .8em 1.2em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: 1em; 
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .button:hover{
+      text-decoration: none;
+    }
+    .button:active {
+      position: relative;
+      top: 1px;
+    }
+    .grey {
+      color: #fff;
+      border: solid 1px #afafaf;
+      background: #6e6e6e;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(58,68,86)), to(rgb(58,68,86)));
+      background: -moz-linear-gradient(top,  rgb(58,68,86),  rgb(58,68,86));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(58,68,86)', endColorstr='rgb(58,68,86)');
+    }
+    .grey:hover {
+
+      color: #fff;
+      background: #616161;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(65,78,98)), to(rgb(65,78,98)));
+      background: -moz-linear-gradient(top,  rgb(65,78,98),  rgb(65,78,98));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(65,78,98)', endColorstr='rgb(65,78,98)');
+    }
+    .grey:active {
+      color: #fff;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(43,49,61)), to(rgb(43,49,61)));
+      background: -moz-linear-gradient(top,  rgb(43,49,61),  rgb(43,49,61));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(43,49,61)', endColorstr='rgb(43,49,61)');
+    }
+
+    #tooltipAvailableCountry {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 10px;
+      border : 1px outset rgb(225,225,225);
+      /**background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);**/
+      background-color:rgb(250,250,250);
+      /-webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      /**pointer-events: none;**/
+        opacity: 1.00;
+        filter:alpha(opacity=100);
+        -moz-opacity:1.00;
+    }
+
+    #tooltipAvailableCountry.hidden {
+      display: none;
+    }
+    td, th {
+    padding: 5px 20px;
+    font: normal 12px "TheSerif", sans-serif;
+    color: #464646;
+    }
+      }
+
+
+
+
+
+     @media (max-width: 530px){
+       #moved{
+        margin-top: 550px;
+        width: 100%;
+        }
+        a.image {
+          margin-top: 10px;
+          float:right;
+          width:15%;
+          content:url("data/How-was-life.png");
+        }​
+    header { margin: 0 0 20px 20px; border-bottom: 1px solid #6c6c6c; width: 45%; position: relative; }
+    
+
+    body { 
+        background: rgba(225,219,193,.1); 
+        background-image:linear-gradient(rgba(225,219,193,.1), rgba(225,219,193,.1));
+        width: 100%; 
+        font: normal 14px "TheSerif", sans-serif; 
+        margin-left: auto; margin-right: auto; 
+        color: #464646;
+      }
+    
+    h1 { 
+      font-family: "TheSerif","TheSerif",sans-serif;
+      font-size: 3.5em; 
+      font-weight: bold;
+      text-shadow: #fff 0px 0px 0; margin: 0 0 0 0; padding: 0; 
+      float:left;}
+    h2 { 
+      font: bold 1.5em "TheSerif", sans-serif; font-weight: normal; 
+      text-shadow: #fff 0 1px 0; margin: 0 0 0 0; padding: 0; }
+    small { margin: 0 0 10px 130px; color: #555; font-size: 13px; font-style: italic; top: 0.6em; position: top;}
+
+    a{
+      color:#78869f;
+    }
+
+    #fixed{
+      position: fixed;
+      top:10px;
+      background-color: rgb(249,247,242);
+      width: 100%;
+      margin-top: -10px;
+      /** *zoom: 1;**/
+    }
+   .subtitle{
+      float:left;
+      width:75%;
+    }
+
+    .row {
+      width: 100%;
+      /**margin-left: -20px;**/
+      *zoom: 1;
+    }
+    .row:before, .row:after {
+      display: table;
+      content: "";
+    }
+    .row:after {
+      clear: both;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .lineaxis path,
+    .lineaxis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+    .lineaxis text {
+      font-family: sans-serif;
+      font-size: 8px;
+      color: rgba(48,49,43,.9);
+    }
+    .gradient{
+        background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+        padding: .0em 0.0em 1.2em 0.0em;
+    }
+
+    #yearWellBeing {
+
+      font-family: "TheSerif","TheSerif",sans-serif;
+      float:left;
+      font-weight: normal;
+      font-size: 7em;
+      color:#78869f;
+      margin: 17px 0px 0 30px;
+    }
+
+    .unit {
+      font-family: sans-serif;
+      font-size: 10px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .indicator{
+      
+      font: bold 18px "TheSerif","TheSerif",sans-serif;
+      margin: 0 0 8px 0;
+    }
+
+    .definition{
+      font: italic 13px "TheSerif", sans-serif;
+      color:#555;
+      margin: 0 0 6px 0;
+      }
+
+    .dataQuality{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 10px 0px 5px 0;
+      }
+    .dataQualityFile{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0px 0px 5px 0;
+      }
+    .source{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0 0 6px 0;
+      }
+
+    #tooltipGDP, #tooltipWage, #tooltipEducation, #tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq  {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      opacity: 1.00;
+      filter:alpha(opacity=100);
+      -moz-opacity:1.00;
+    }
+
+
+    #tooltipGDP.hidden, #tooltipWage.hidden, #tooltipEducation.hidden, #tooltipLifeExp.hidden, #tooltipHeight.hidden, #tooltipHomicide.hidden, #tooltipPolity.hidden, #tooltipCO2.hidden, #tooltipSO2.hidden, #tooltipCropland.hidden, #tooltipIncomeIneq.hidden {
+      display: none;
+    }
+
+    #tooltipGDP,#tooltipWage,#tooltipEducation,#tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq p {
+      margin: 0;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 13px;
+    }
+
+
+
+
+    .button {
+      /*float:right;*/
+      width: 55px;
+      height: 25px;
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      font: 13px "TheSerif", sans-serif;
+      padding: .3em 1em .8em 1.2em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: 1em; 
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .button:hover{
+      text-decoration: none;
+    }
+    .button:active {
+      position: relative;
+      top: 1px;
+    }
+    .grey {
+      color: #fff;
+      border: solid 1px #afafaf;
+      background: #6e6e6e;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(58,68,86)), to(rgb(58,68,86)));
+      background: -moz-linear-gradient(top,  rgb(58,68,86),  rgb(58,68,86));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(58,68,86)', endColorstr='rgb(58,68,86)');
+    }
+    .grey:hover {
+
+      color: #fff;
+      background: #616161;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(65,78,98)), to(rgb(65,78,98)));
+      background: -moz-linear-gradient(top,  rgb(65,78,98),  rgb(65,78,98));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(65,78,98)', endColorstr='rgb(65,78,98)');
+    }
+    .grey:active {
+      color: #fff;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(43,49,61)), to(rgb(43,49,61)));
+      background: -moz-linear-gradient(top,  rgb(43,49,61),  rgb(43,49,61));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(43,49,61)', endColorstr='rgb(43,49,61)');
+    }
+
+    #tooltipAvailableCountry {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 10px;
+      border : 1px outset rgb(225,225,225);
+      /**background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);**/
+      background-color:rgb(250,250,250);
+      /-webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      /**pointer-events: none;**/
+        opacity: 1.00;
+        filter:alpha(opacity=100);
+        -moz-opacity:1.00;
+    }
+
+    #tooltipAvailableCountry.hidden {
+      display: none;
+    }
+    td, th {
+    padding: 5px 20px;
+    font: normal 12px "TheSerif", sans-serif;
+    color: #464646;
+    }
+      }
+
+
+
+
+
+     @media (max-width: 449px){
+       #moved{
+        margin-top: 700px;
+        width: 100%;
+        }
+
+        a.image {
+          margin-top: 10px;
+          float:right;
+          width:10%;
+          content:url("data/How-was-life.png");
+        }​
+    header { margin: 0 0 20px 20px; border-bottom: 1px solid #6c6c6c; width: 45%; position: relative; }
+    
+
+    body { 
+        background: rgba(225,219,193,.1); 
+        background-image:linear-gradient(rgba(225,219,193,.1), rgba(225,219,193,.1));
+        width: 100%; 
+        font: normal 14px "TheSerif", sans-serif; 
+        margin-left: auto; margin-right: auto; 
+        color: #464646;
+      }
+    
+    h1 { 
+      font-family: "TheSerif","TheSerif",sans-serif;
+      font-size: 3.5em; 
+      font-weight: bold;
+      text-shadow: #fff 0px 0px 0; margin: 0 0 0 0; padding: 0; 
+      float:left;}
+    h2 { 
+      font: bold 1.5em "TheSerif", sans-serif; font-weight: normal; 
+      text-shadow: #fff 0 1px 0; margin: 0 0 0 0; padding: 0; }
+    small { margin: 0 0 10px 130px; color: #555; font-size: 13px; font-style: italic; top: 0.6em; position: top;}
+
+    a{
+      color:#78869f;
+    }
+
+    #fixed{
+      position: fixed;
+      top:10px;
+      background-color: rgb(249,247,242);
+      width: 100%;
+      margin-top: -10px;
+      /** *zoom: 1;**/
+    }
+   .subtitle{
+      float:left;
+      width:75%;
+    }
+
+    .row {
+      width: 100%;
+      /**margin-left: -20px;**/
+      *zoom: 1;
+    }
+    .row:before, .row:after {
+      display: table;
+      content: "";
+    }
+    .row:after {
+      clear: both;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .lineaxis path,
+    .lineaxis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+    .lineaxis text {
+      font-family: sans-serif;
+      font-size: 8px;
+      color: rgba(48,49,43,.9);
+    }
+    .gradient{
+        background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+        padding: .0em 0.0em 1.2em 0.0em;
+    }
+
+    #yearWellBeing {
+
+      font-family: "TheSerif","TheSerif",sans-serif;
+      float:left;
+      font-weight: normal;
+      font-size: 7em;
+      color:#78869f;
+      margin: 17px 0px 0 30px;
+    }
+
+    .unit {
+      font-family: sans-serif;
+      font-size: 10px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .indicator{
+      
+      font: bold 18px "TheSerif","TheSerif",sans-serif;
+      margin: 0 0 8px 0;
+    }
+
+    .definition{
+      font: italic 13px "TheSerif", sans-serif;
+      color:#555;
+      margin: 0 0 6px 0;
+      }
+
+    .dataQuality{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 10px 0px 5px 0;
+      }
+    .dataQualityFile{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0px 0px 5px 0;
+      }
+    .source{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0 0 6px 0;
+      }
+
+    #tooltipGDP, #tooltipWage, #tooltipEducation, #tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq  {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      opacity: 1.00;
+      filter:alpha(opacity=100);
+      -moz-opacity:1.00;
+    }
+
+
+    #tooltipGDP.hidden, #tooltipWage.hidden, #tooltipEducation.hidden, #tooltipLifeExp.hidden, #tooltipHeight.hidden, #tooltipHomicide.hidden, #tooltipPolity.hidden, #tooltipCO2.hidden, #tooltipSO2.hidden, #tooltipCropland.hidden, #tooltipIncomeIneq.hidden {
+      display: none;
+    }
+
+    #tooltipGDP,#tooltipWage,#tooltipEducation,#tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq p {
+      margin: 0;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 13px;
+    }
+
+
+
+
+    .button {
+      /*float:right;*/
+      width: 55px;
+      height: 25px;
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      font: 13px "TheSerif", sans-serif;
+      padding: .3em 1em .8em 1.2em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: 1em; 
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .button:hover{
+      text-decoration: none;
+    }
+    .button:active {
+      position: relative;
+      top: 1px;
+    }
+    .grey {
+      color: #fff;
+      border: solid 1px #afafaf;
+      background: #6e6e6e;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(58,68,86)), to(rgb(58,68,86)));
+      background: -moz-linear-gradient(top,  rgb(58,68,86),  rgb(58,68,86));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(58,68,86)', endColorstr='rgb(58,68,86)');
+    }
+    .grey:hover {
+
+      color: #fff;
+      background: #616161;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(65,78,98)), to(rgb(65,78,98)));
+      background: -moz-linear-gradient(top,  rgb(65,78,98),  rgb(65,78,98));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(65,78,98)', endColorstr='rgb(65,78,98)');
+    }
+    .grey:active {
+      color: #fff;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(43,49,61)), to(rgb(43,49,61)));
+      background: -moz-linear-gradient(top,  rgb(43,49,61),  rgb(43,49,61));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(43,49,61)', endColorstr='rgb(43,49,61)');
+    }
+
+    #tooltipAvailableCountry {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 10px;
+      border : 1px outset rgb(225,225,225);
+      /**background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);**/
+      background-color:rgb(250,250,250);
+      /-webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      /**pointer-events: none;**/
+        opacity: 1.00;
+        filter:alpha(opacity=100);
+        -moz-opacity:1.00;
+    }
+
+    #tooltipAvailableCountry.hidden {
+      display: none;
+    }
+    td, th {
+    padding: 5px 20px;
+    font: normal 12px "TheSerif", sans-serif;
+    color: #464646;
+    }
+      }
+    .subtitle{
+      float:left;
+      width:75%;
+    }
+
+    .row {
+      width: 100%;
+      /**margin-left: -20px;**/
+      *zoom: 1;
+    }
+    .row:before, .row:after {
+      display: table;
+      content: "";
+    }
+    .row:after {
+      clear: both;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 12px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .lineaxis path,
+    .lineaxis line {
+      fill: none;
+      stroke: none;
+      shape-rendering: crispEdges;
+    }
+
+    .lineaxis text {
+      font-family: sans-serif;
+      font-size: 8px;
+      color: rgba(48,49,43,.9);
+    }
+    .gradient{
+        background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+        padding: .0em 0.0em 1.2em 0.0em;
+    }
+
+    #yearWellBeing {
+
+      font-family: "TheSerif","TheSerif",sans-serif;
+      float:left;
+      font-weight: normal;
+      font-size: 7em;
+      color:#78869f;
+      margin: 17px 0px 0 30px;
+    }
+
+    .unit {
+      font-family: sans-serif;
+      font-size: 10px;
+      color: rgba(48,49,43,.9);
+    }
+
+    .indicator{
+      
+      font: bold 18px "TheSerif","TheSerif",sans-serif;
+      margin: 0 0 8px 0;
+    }
+
+    .definition{
+      font: italic 13px "TheSerif", sans-serif;
+      color:#555;
+      margin: 0 0 6px 0;
+      }
+
+    .dataQuality{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 10px 0px 5px 0;
+      }
+    .dataQualityFile{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0px 0px 5px 0;
+      }
+    .source{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(48,49,43,.7);
+      margin: 0 0 6px 0;
+      }
+
+    #tooltipGDP, #tooltipWage, #tooltipEducation, #tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq  {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 5px;
+      background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
+      opacity: 1.00;
+      filter:alpha(opacity=100);
+      -moz-opacity:1.00;
+    }
+
+
+    #tooltipGDP.hidden, #tooltipWage.hidden, #tooltipEducation.hidden, #tooltipLifeExp.hidden, #tooltipHeight.hidden, #tooltipHomicide.hidden, #tooltipPolity.hidden, #tooltipCO2.hidden, #tooltipSO2.hidden, #tooltipCropland.hidden, #tooltipIncomeIneq.hidden {
+      display: none;
+    }
+
+    #tooltipGDP,#tooltipWage,#tooltipEducation,#tooltipLifeExp, #tooltipHeight, #tooltipHomicide, #tooltipPolity, #tooltipCO2, #tooltipSO2, #tooltipCropland, #tooltipIncomeIneq p {
+      margin: 0;
+      font-family: sans-serif;
+      font-size: 12px;
+      line-height: 13px;
+    }
+
+
+
+
+    .button {
+      /*float:right;*/
+      width: 75px;
+      height: 25px;
+      display: inline-block;
+      outline: none;
+      cursor: pointer;
+      text-align: left;
+      text-decoration: none;
+      font: 13px "TheSerif", sans-serif;
+      padding: .3em 1em .8em 1.2em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.3);
+      -webkit-border-radius: 1em; 
+      -moz-border-radius: 1em;
+      border-radius: 1em;
+      -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+      box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .button:hover{
+      text-decoration: none;
+    }
+    .button:active {
+      position: relative;
+      top: 1px;
+    }
+    .grey {
+      color: #fff;
+      border: solid 1px #afafaf;
+      background: #6e6e6e;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(58,68,86)), to(rgb(58,68,86)));
+      background: -moz-linear-gradient(top,  rgb(58,68,86),  rgb(58,68,86));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(58,68,86)', endColorstr='rgb(58,68,86)');
+    }
+    .grey:hover {
+
+      color: #fff;
+      background: #616161;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(65,78,98)), to(rgb(65,78,98)));
+      background: -moz-linear-gradient(top,  rgb(65,78,98),  rgb(65,78,98));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(65,78,98)', endColorstr='rgb(65,78,98)');
+    }
+    .grey:active {
+      color: #fff;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgb(43,49,61)), to(rgb(43,49,61)));
+      background: -moz-linear-gradient(top,  rgb(43,49,61),  rgb(43,49,61));
+      filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='rgb(43,49,61)', endColorstr='rgb(43,49,61)');
+    }
+
+    #tooltipAvailableCountry {
+      position: absolute;
+      width: auto;
+      height: auto;
+      padding: 10px;
+      border : 1px outset rgb(225,225,225);
+      /**background-image:linear-gradient(rgba(193,180,186,.2), rgba(205,213,204,.1));
+      background-color: rgba(255,255,255,1);**/
+      background-color:rgb(250,250,250);
+      /-webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      /**pointer-events: none;**/
+        opacity: 1.00;
+        filter:alpha(opacity=100);
+        -moz-opacity:1.00;
+    }
+
+    #tooltipAvailableCountry.hidden {
+      display: none;
+    }
+    td, th {
+    padding: 5px 20px;
+    font: normal 12px "TheSerif", sans-serif;
+    color: #464646;
+    }
+
+  </style>
+</head>
+<body>
+
+
+
+  
+<div id="fixed">
+  <div class="row">
+    <h1 >Comment<br>vivait-on? en </h1><div id="yearWellBeing">1820</div>
+    <div><a class="image" href="http://www.oecd.org/statistics/how-was-life_9789264214262-en.htm" target="_blank" ><img src="data/How-was-life.png"></img></a></div>
+    <div class="subtitle">Comment vivait-on en 1820 et en quoi la vie s’est-elle améliorée depuis ? Quelle est l’évolution à long terme du bien-être à l’échelle mondiale ? Depuis la révolution industrielle, la vision du progrès social est en grande partie fondée sur la comptabilité nationale historique conforme aux théories de Kuznets et de Maddison. Et si l’évolution du PIB réel par habitant ne reflétait pas pleinement celle des autres dimensions du bien-être, comme l’espérance de vie, l’éducation, la sécurité des personnes ou les inégalités hommes-femmes ?  <br>L’analyse de ces indicateurs offre en général une vision plus égalitaire du monde que celle fournie par les seuls indicateurs du revenu, mais est-ce que cela a toujours été le cas ? Le rapport <a href="http://www.oecd.org/statistics/how-was-life_9789264214262-en.htm" target="_blank" >How Was Life?</a> a pour ambition de répondre à cette question.</div>
+  </div>
+  <div class="row">
+        <div><b>Cliquez sur une année</b> ou appuyez sur lecture pour voir l’évolution de la qualité de vie&nbsp;&nbsp; <button class="button grey" id="Compare" type="submit" value="" title="Play" onclick="play()">Lecture</button></div>
+    <div class="dataQualityFile">Cliquez <a href="#" onclick="openPopUp()" >ici</a> pour vérifier s’il existe des données disponibles pour un pays donné et, si oui, pour quelle(s) année(s)</div>
+    <div id="timeSelection"></div>
+  </div>
+</div>
+<div id="moved">
+  <p>
+  <div><b>Choisissez un pays </b> pour visualiser son évolution: <select class="qualitytest" id="countryDropdown" ></select></div>
+   <p>
+
+<!-- Tooltip data availability -->
+
+<div id="tooltipAvailableCountry"  class="hidden">
+
+      <button class="buttonC grey" id="close" type="submit" value="" title="closePopUp" onclick="closePopUp()">Fermer</button><p>
+      Choisissez un pays pour vérifier la disponibilité des données : <select id="countryAvailabilityDropdown"></select>
+  <div id="countryTable"></div>
+</div>
+
+
+  <div class="row">
+    <div class="indicator">PIB par habitant</div>
+    <div class="definition">Le revenu est un indicateur de base du niveau de vie matériel des individus et, partant, de leur bien-être. Aujourd’hui, le PIB par habitant est la meilleure mesure du revenu sur le plan historique. Il correspond à la valeur des biens et services produits dans une économie en USD de 1990, au moyen des parités de pouvoir d’achat (PPA).</div>
+    <div id="DQ_GDP" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="gdpPerCapita" class="gradient"></div>
+  </div>  
+  <br>
+  <div class="row">
+    <div class="indicator">Salaire réel</div>
+    <div class="definition">Le salaire est un déterminant important du bien-être, puisqu’il reflète une dimension clé de la qualité des emplois et qu’il fournit des informations sur le niveau de vie du salarié. Pour que les mesures du salaire réel soient comparables dans le temps, les indicateurs utilisés ici correspondent au nombre de paniers contenant des produits de première nécessité – sur la base du coût des produits alimentaires, des vêtements et des combustibles de base – que peut acheter un travailleur non qualifié du secteur du bâtiment. </div>
+    <div id="DQ_WAGE" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="realWages" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Nombre moyen d’années d’études</div>
+    <div class="definition">L’éducation est cruciale pour fournir aux individus les connaissances et les compétences dont ils ont besoin pour participer efficacement à la société et à l’économie. Composante intrinsèquement essentielle du bien-être, l’éducation influe également sur d’autres dimensions du bien-être. Le nombre moyen d’années d’études correspond au nombre d’années de scolarité (dans le primaire, le secondaire ou le supérieur) suivies par une personne âgée de 15 ans ou plus. </div>
+    <div id="DQ_EDU" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="education" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Espérance de vie à la naissance</div>
+    <div class="definition">La santé contribue au bien-être à la fois directement – son importance est universellement reconnue – et indirectement, en agissant sur d’autres dimensions du bien-être. L’indicateur standard de l’état de santé de la population est l’espérance de vie. La mesure utilisée ici, à savoir l’espérance de vie à la naissance, correspond au nombre d’années que peut espérer vivre un enfant qui vient de naître, en fonction des taux de mortalité par âge observés au moment de la naissance.</div>
+    <div id="DQ_LIFEEXP" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="lifeExpectancy" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Taille</div>
+    <div class="definition">Si elle n’est pas un indicateur direct du bien-être, la taille fournit une mesure relativement fiable de l’état de santé et de la qualité de la nutrition d’une population, en particulier pendant les premières années de la vie. Il s’agit donc d’une variable indicatrice clé de l’état de santé et du niveau de revenu, qui peut être utilisée pour mesurer le bien-être en l’absence d’autres données ou lorsque les données disponibles sont faussées. Est utilisée la taille moyenne de la population, exprimée en centimètres.</div>
+    <div id="DQ_HEIGHT" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="height" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Taux d’homicides</div>
+    <div class="definition">La sécurité des personnes – par rapport aux menaces que représentent la violence, les dommages corporels ou la mort – est une dimension essentielle du bien-être. S’il n’existe pas d’indicateurs fiables du risque de violence sur de longues périodes (ou même pour la plupart des pays du monde à l’heure actuelle), le taux d’homicides donne une bonne idée de l’évolution globale de la violence. Il correspond au nombre de décès intentionnels pour 100 000 personnes.</div>
+    <div id="DQ_HOMICIDE" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="homicide" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Institutions politiques</div>
+    <div class="definition">Les institutions politiques déterminent le degré de liberté dont bénéficient les individus et leur capacité à exercer une influence sur leur environnement social et politique. S’ils influent de manière déterminante sur les résultats en matière de bien-être, des processus équitables et démocratiques sont également plébiscités en tant que tels par la population. L’indice Polity 2 utilisé ici évalue le régime politique d’un pays sur une échelle comprise entre +10 (démocratie) et -10 (autocratie), en s’appuyant sur les règles relatives au processus politique et sur sa compétitivité.</div>
+    <div id="DQ_POLITY" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="polity" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Émissions de CO<sub>2</sub></div>
+    <div class="definition">Si les émissions de dioxyde de carbone n’ont qu’une influence directe limitée sur le bien-être actuel, elles sont parmi les principaux moteurs du changement climatique à moyen et long terme. À ce titre, elles ont un impact potentiel important sur l’évolution du bien-être à l’avenir et constituent donc un indicateur clé de la pérennité du bien-être à long terme. Les émissions de dioxyde de carbone sont mesurées en tonnes par personne et par an.</div>
+    <div id="DQ_CO2" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="co2" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Émissions de SO<sub>2</sub></div>
+    <div class="definition">La pollution atmosphérique est une dimension de la qualité de l’environnement qui influe directement sur la santé et le bien-être des individus. Les émissions de dioxyde de soufre proviennent de la combustion du charbon et du pétrole, et sont directement à l’origine des pluies acides. Les émissions sont mesurées en tonnes de dioxyde de soufre par personne et par an.</div>
+    <div id="DQ_SO2" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="so2" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Biodiversité</div>
+    <div class="definition">La biodiversité est nécessaire pour préserver les principales fonctions d’un écosystème et elle contribue directement au bien-être en influençant le sentiment qu’ont les individus de la nature qui les entoure. S’il est impossible de mesurer directement la biodiversité sur le plan historique, l’évolution de l’utilisation des sols conditionne l’évolution de la biodiversité. On mesure l’utilisation des sols par un indice de l’abondance moyenne des espèces, calculé à partir des superficies non bâties ou affectées aux cultures, aux pâturages et à la construction.</div>
+    <div id="DQ_CROPLAND" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation).</div>  
+    <div id="cropland" class="gradient"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="indicator">Inégalités de revenu</div>
+    <div class="definition">Le niveau moyen des ressources économiques dans la société et leur répartition constituent deux composantes clés du bien-être. Les indicateurs des inégalités de revenu fournissent des informations sur la répartition des fruits de la croissance économique dans la société. Les inégalités de revenu sont mesurées par le coefficient de Gini, par rapport au revenu brut des ménages. </div>
+    <div id="DQ_INCOMEINEQ" class="dataQuality">Passez votre souris sur un pays pour obtenir des informations sur la qualité des données disponibles (de 1 = excellente qualité à 4 = estimation). </div>  
+    <div id="incomeIneq" class="gradient"></div>
+  </div>
+  <p>
+  <div class="source">source: <a href="https://www.clio-infra.eu/datasets/indicators" target="_blank">www.clio-infra.eu</a> </div>
+  <p>
+  <div>Le rapport <a href="http://www.oecd.org/statistics/how-was-life_9789264214262-en.htm" target="_blank" >How Was Life?</a> présente les premières données systémiques sur l’évolution à long terme du bien-être à l’échelon mondial depuis 1820. Il couvre 25 grands pays et 8 régions du monde. Pour n’importe quelle analyse historique d’une telle portée, la question de la qualité des données est cruciale. Si les données présentées ici sont tirées des meilleures sources et connaissances actuellement disponibles afin d’offrir une perspective historique cohérente, elles ne visent pas à dresser un tableau définitif de ces questions, mais plutôt à encourager d’autres spécialistes à s’engager dans ce domaine.</div>
+  <p>
+  <div><i>Dans un souci de compréhension, veuillez noter que les données manquantes pour une période ont été remplacées par des données relatives à la période antérieure.</i></div>
+</div> 
+  <!--           TOOLTIPS             -->
+
+  <div id="tooltipGDP" class="hidden">
+   <table style="width:350px">
+      <tr id="countryName">
+      </tr>
+      <tr id="lineGDP">
+      </tr>
+    </table>  
+  </div>
+  <div id="tooltipWage" class="hidden">
+   <table style="width:350px">
+      <tr id="countryNameWage">
+      </tr>
+      <tr id="lineWage">
+      </tr>
+  </table>  
+</div>
+<div id="tooltipEducation" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameEdu">
+    </tr>
+    <tr id="lineEDU">
+    </tr>
+</table>  
+</div>
+<div id="tooltipLifeExp" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameLifeExp">
+    </tr>
+    <tr id="lineLIFEEXP">
+    </tr>
+</table>  
+</div>
+<div id="tooltipHeight" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameHeight">
+    </tr>
+    <tr id="lineHEIGHT">
+    </tr>
+</table>  
+</div>
+<div id="tooltipHomicide" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameHomicide">
+    </tr>
+    <tr id="lineHOMICIDE">
+    </tr>
+</table>  
+</div>
+<div id="tooltipPolity" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNamePolity">
+    </tr>
+    <tr id="linePOLITY">
+    </tr>
+</table>  
+</div>
+<div id="tooltipCO2" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameCO2">
+    </tr>
+    <tr id="lineCO2">
+    </tr>
+</table>  
+</div>
+<div id="tooltipSO2" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameSO2">
+    </tr>
+    <tr id="lineSO2">
+    </tr>
+</table>  
+</div>
+<div id="tooltipCropland" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameCropland">
+    </tr>
+    <tr id="lineCROPLAND">
+    </tr>
+</table>  
+</div>
+<div id="tooltipIncomeIneq" class="hidden">
+ <table style="width:350px">
+    <tr id="countryNameIncomeIneq">
+    </tr>
+    <tr id="lineINCOMEINEQ">
+    </tr>
+</table>  
+</div>
+
+   <p>
+</div> 
+
+<!--          SCRIPTS           -->
+
+
+  <script>
+    d3.selection.prototype.moveToFront = function() {
+      return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+
+    //*************COUNTRY SELECTOR *****************************//
+
+    d3.tsv("data/Country.tsv", function(error,data){
+      var dataCountry = data.sort(function(a, b) {
+        return d3.ascending(a.Country, b.Country);
+      })
+
+      var select = d3.select("#countryDropdown")
+        .selectAll("option")
+        .data(dataCountry)
+        .enter()
+        .append("option")
+        .attr("value", function(d) {
+          return d.Country; 
+        })
+        .text(function(d) { 
+          return d.Country; 
+        })
+
+        /**d3.selectAll("select")
+        .on("change",function(){
+          
+        });**/
+
+      var select2 = d3.select("#countryAvailabilityDropdown")
+        .selectAll("option")
+        .data(dataCountry)
+        .enter()
+        .append("option")
+        .attr("value", function(d) {
+          return d.Country; 
+        })
+        .text(function(d) { 
+          return d.Country; 
+        });
+
+        d3.selectAll("select")
+        .on("change",function(){
+          var selectedCountry = document.getElementById("countryAvailabilityDropdown");
+          selectedCountry.options[selectedCountry.options.selectedIndex].selected = true;
+          table(document.getElementById("countryAvailabilityDropdown").options[document.getElementById("countryAvailabilityDropdown").selectedIndex].value,["Année","Disponibilité","Nombre de données"]);
+
+          var selectedCountry2 = document.getElementById("countryDropdown");
+
+          selectedCountry2.options[selectedCountry2.options.selectedIndex].selected = true;
+
+          updateCountry();
+        });
+    });
+
+  //*************YEAR SELECTOR *****************************//
+
+    var margin = 0.03*parseInt(d3.select("#timeSelection").style("width"), 10),
+        width = parseInt(d3.select("#timeSelection").style("width"), 10),
+        height = 60;
+    var fontSize=11;
+
+    chart = d3.select("#timeSelection").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    d3.tsv("data/Year.tsv", function(tsv) {
+      data = tsv;
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(data, function(d) { return parseFloat(d.Year); }), d3.max(data, function(d) { return parseFloat(d.Year); })])
+        .range([margin, width - margin * 2]);
+      
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+
+      //Create circles
+      chart.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+          return xScale(parseFloat(d.Year));
+        })
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill",function(d){
+          if(d.Year=="1820")
+            return "rgb(224,47,123)";
+          else
+            return "rgba(225,219,193,.1)"
+        })
+        .attr("stroke","rgb(224,47,123)")
+        .attr("stroke-width",2);
+
+      //Create labels
+
+      chart.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .text(function(d) {
+            return d.Year;
+        })
+        .attr("x", function(d) {
+          if(d.Year!=="2010")
+            return xScale(parseFloat(d.Year)-fontSize/3.75);
+          else
+            return xScale(parseFloat(d.Year)-fontSize/3.75);
+        })
+        .attr("y", height/1.15)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", fontSize);
+   
+
+      chart.selectAll("circle")
+        .on("click",function(d){
+          d3.selectAll("circle").attr("fill","rgba(225,219,193,.1)")
+          d3.select(this).attr("fill","rgb(224,47,123)")    
+          document.getElementById("yearWellBeing").innerHTML = d.Year;
+          update(d.Year);
+        });
+
+
+    /**d3.select(window).on("resize", resize); 
+
+    function resize() {
+      console.log(parseInt(d3.select("#timeSelection").style("width"), 10))
+        // update width
+        width = parseInt(d3.select("#timeSelection").style("width"), 10);
+        margin=0.03*parseInt(d3.select("#timeSelection").style("width"), 10);
+
+        // resize the chart
+
+        xScale.range([margin, width - margin * 2]);
+
+        d3.select("#chart")
+            .style('height', height + 'px')
+            .style("width", width + 'px');
+
+
+          chart.selectAll("circle")
+              .attr("cx", function(d) { return xScale(d.Year); });
+          
+          chart.selectAll("text")
+              .attr("x", function(d) {
+              if(d.Year!=="2010")
+                return xScale(d.Year)-fontSize/3.75;
+              else
+                return xScale(parseFloat(d.Year)-fontSize/3.75);
+            });
+
+
+          // update axes
+          //chart.select('.x.axis.top').call(xAxis.orient('top'));
+          chart.select('.axis.bottom').call(xAxis.orient('bottom'));
+    }**/
+
+
+    });
+
+
+  //*************GDP PER CAPITA CHART SETTINGS *****************************//
+
+
+    chartGDP = d3.select("#gdpPerCapita").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/GDP_Per_Capita-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartGDP.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+
+      //Create circles
+      chartGDP.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartGDP.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("En USD de 1990");
+
+    });
+
+
+  //*************REAL WAGES CHART SETTINGS *****************************//
+
+
+    chartRealWages = d3.select("#realWages").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Labourers-Real-Wage-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartRealWages.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartRealWages.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartRealWages.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Nbre de paniers quotidiens contenant des produits de première nécessité pouvant être achetés avec un salaire journalier");
+
+    });
+
+
+  //*************EDUCATION CHART SETTINGS *****************************//
+
+
+    chartEducation = d3.select("#education").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Average_Years_of_Education-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartEducation.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartEducation.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartEducation.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Nb moyen d’années d’études ");
+
+    });
+
+
+  //*************LIFEEXPECTANCY CHART SETTINGS *****************************//
+
+
+    chartLifeExp = d3.select("#lifeExpectancy").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Life_Expectancy_at_Birth-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([18, d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartLifeExp.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartLifeExp.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartLifeExp.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Années");
+
+    });
+
+  //*************HEIGHT CHART SETTINGS *****************************//
+
+
+    chartHeight = d3.select("#height").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Height-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        //.domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+
+        .domain([150, d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartHeight.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartHeight.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartHeight.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Centimètres");
+
+    });
+
+  //*************HOMICIDE CHART SETTINGS *****************************//
+
+
+    chartHomicide = d3.select("#homicide").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Homicide_rates-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartHomicide.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartHomicide.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartHomicide.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("pour 100,000 habitants");
+
+    });
+
+
+  //*************POLITY SETTINGS *****************************//
+
+
+    chartPolity = d3.select("#polity").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Polity2_Index-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartPolity.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartPolity.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartPolity.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Échelle comprise entre -10 (Autocracie) to + 10 (Démocratie)");
+
+    });
+
+
+  //*************CO2 SETTINGS *****************************//
+
+
+    chartCO2 = d3.select("#co2").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Total_CO2_Emissions.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.sqrt()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartCO2.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartCO2.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartCO2.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Tonnes de CO2 par habitant");//if we use per capita emissions
+            //.text("Gg SO2 air pollution"); //if we use the total emissions
+
+    });
+
+
+  //*************SO2 SETTINGS *****************************//
+
+
+    chartSO2 = d3.select("#so2").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Total_SO2_Emissions.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.sqrt()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartSO2.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartSO2.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartSO2.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Gg de SO2 par habitant"); //if we use per capita emissions
+            //.text("Gg SO2 air pollution"); //if we use the total emissions
+
+    });
+
+
+  //*************LAND USE SETTINGS *****************************//
+
+
+    chartCropland = d3.select("#cropland").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Total_Pasture.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartCropland.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartCropland.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartCropland.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Valeurs relatives à l'abondance en espèces vierges");
+
+    });
+
+ //*************INCOME INEQ SETTINGS *****************************//
+
+
+    chartIncomeIneq = d3.select("#incomeIneq").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+    
+    d3.tsv("data/Income_inequality-WB.tsv", function(tsv) {
+
+      //Create scale functions
+      var xScale = d3.scale.linear()
+        .domain([d3.min(tsv, function(d) { return parseFloat(d.value); }), d3.max(tsv,function(d) { return parseFloat(d.value); })])
+        .range([margin, width - margin * 2]);
+
+      var yScale = d3.scale.linear()
+        .domain([0,1])
+        .range([height - margin, margin]);
+
+      //Define X axis
+      var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
+
+      //Create X axis
+      chartIncomeIneq.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + yScale(0) + ")")
+        .call(xAxis);
+
+      //Create circles
+      chartIncomeIneq.selectAll("circle")
+        .data(tsv)
+        .enter()
+        .append("circle")
+        .attr("cx", 0)
+        .attr("cy", height/2)
+        .attr("r", function(d) {
+          return 6;
+        })
+        .attr("fill","white")
+        .attr("opacity",0.2);
+
+  
+      chartIncomeIneq.append("text")
+            .attr("class","unit")
+            .attr("x",0.05*width)
+            .attr("y",0.98*height)
+            .text("Points de Gini");
+
+    });
+  //*************LAUNCH APPLICATION *****************************//
+
+    update(1820);
+
+  
+  </script>
+</body>
